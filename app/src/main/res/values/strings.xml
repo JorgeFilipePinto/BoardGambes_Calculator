@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Board_Games</string>
 
+    <string name="num_players_error">Número de Jogadores inválido min: 2 e max: 8</string>
+
+    <string name="valid_name">Jogador Registado com Sucesso</string>
+    <string name="invalid_name">Insira um nome</string>
 </resources>

@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 
 public class Ligretto extends AppCompatActivity {
 
+    public static boolean inGame = false;
+    int shortDuration, longDuration;
     int playersNum, registedPlayers, sent = 0;
     ArrayList<String> playersNames = new ArrayList<String>();
     ArrayList<Integer> playersPoints = new ArrayList<Integer>();
@@ -27,6 +30,7 @@ public class Ligretto extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ligretto);
+        inGame = true;
 
         playerStatus = findViewById(R.id.player_status);
         numPlayer = findViewById(R.id.layout_numPlayers);
@@ -50,18 +54,33 @@ public class Ligretto extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 playersNum = Integer.parseInt(playerQuantity.getText().toString());
-                namePlayer.setVisibility(View.VISIBLE);
-                numPlayer.setVisibility(View.GONE);
+                if(playersNum > 1 && playersNum <= 8)
+                {
+                    namePlayer.setVisibility(View.VISIBLE);
+                    numPlayer.setVisibility(View.GONE);
+                }
+                else
+                {
+                    sendToast(R.string.num_players_error, longDuration);
+                }
             }
         });
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playersNames.add(playerName.getText().toString());
-                playersPoints.add(0);
-                playerName.getText().clear();
-                registedPlayers++;
+                if(!playerName.getText().toString().isEmpty())
+                {
+                    playersNames.add(playerName.getText().toString());
+                    playersPoints.add(0);
+                    playerName.getText().clear();
+                    registedPlayers++;
+                    sendToast(R.string.valid_name, shortDuration);
+                }
+                else
+                {
+                    sendToast(R.string.invalid_name, longDuration);
+                }
 
                 if(registedPlayers == playersNum)
                 {
@@ -125,6 +144,11 @@ public class Ligretto extends AppCompatActivity {
     {
         int newPoints = (playersPoints.get(index) - (2 * pointsSubtractor) + pointsPositives);
         playersPoints.set(index, newPoints);
+    }
+
+    public void sendToast(int stringID, int duration)
+    {
+        Toast.makeText(this, stringID, duration).show();
     }
 
 }
