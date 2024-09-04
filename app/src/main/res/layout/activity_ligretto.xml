@@ -179,10 +179,41 @@
 
     <LinearLayout
         android:id="@+id/player_status"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/winner_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FF9800">
+
+            <TextView
+                android:id="@+id/win_player"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:text="winner"
+                android:textAlignment="center"
+                android:textColor="#FFEB3B"
+                android:textSize="30dp"
+                android:textStyle="bold">
+
+            </TextView>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/round_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="rounds"
+            android:textSize="30dp">
+
+        </TextView>
 
         <LinearLayout
             android:layout_width="wrap_content"

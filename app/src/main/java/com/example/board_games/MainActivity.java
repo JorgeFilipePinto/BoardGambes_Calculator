@@ -19,9 +19,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if(Ligretto.inGame){
+        /*if(Ligretto.inGame){
             setContentView(R.layout.activity_ligretto);
-        }
+        }*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ligrettoGame = findViewById(R.id.ligreto);

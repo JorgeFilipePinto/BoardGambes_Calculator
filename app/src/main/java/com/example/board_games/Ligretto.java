@@ -15,22 +15,22 @@ import java.util.ArrayList;
 public class Ligretto extends AppCompatActivity {
 
     public static boolean inGame = false;
+    int round;
     int shortDuration, longDuration;
     int playersNum, registedPlayers, sent = 0;
     ArrayList<String> playersNames = new ArrayList<String>();
     ArrayList<Integer> playersPoints = new ArrayList<Integer>();
 
-    LinearLayout numPlayer, namePlayer, playerStatus,calculator;
+    LinearLayout numPlayer, namePlayer, playerStatus,calculator, winLayout;
     EditText playerQuantity, playerName, negPoints, posiPoints;
     Button checkNum, register, calculateButton, sendPoints;
-    TextView name, points, playerSendName;
+    TextView name, points, playerSendName, roundsTxt, winner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ligretto);
-        inGame = true;
 
         playerStatus = findViewById(R.id.player_status);
         numPlayer = findViewById(R.id.layout_numPlayers);
@@ -47,6 +47,9 @@ public class Ligretto extends AppCompatActivity {
         name = findViewById(R.id.player_name_apresentation);
         points = findViewById(R.id.player_points_apresentation);
         calculator = findViewById(R.id.layout_points_calculator);
+        roundsTxt = findViewById(R.id.round_text);
+        winner = findViewById(R.id.win_player);
+        winLayout = findViewById(R.id.winner_layout);
 
         newGame();
 
@@ -111,6 +114,8 @@ public class Ligretto extends AppCompatActivity {
             {
                 calculator.setVisibility(View.GONE);
                 sent = 0;
+                round++;
+                roundsTxt.setText("Ronda " + round);
             }
             else
             {
@@ -128,16 +133,33 @@ public class Ligretto extends AppCompatActivity {
         namePlayer.setVisibility(View.GONE);
         playerStatus.setVisibility(View.GONE);
         calculator.setVisibility(View.GONE);
+        round = 0;
+        inGame = true;
+        roundsTxt.setText("Ronda " + round);
+        winLayout.setVisibility(View.GONE);
     }
 
     public void calculateStatus(){
         String tempNames = "", tempPoints = "";
+
         for(int i = 0; i<playersNum; i++){
             tempNames += playersNames.get(i) + "\n";
             tempPoints +=playersPoints.get(i) + "\n";
         }
         name.setText(tempNames);
         points.setText(tempPoints);
+        int winPoints = playersPoints.get(0);
+        String indexWinner = playersNames.get(0);
+        if(round > 0){
+            for(int i = 1; i<playersNames.size(); i++){
+                if(winPoints < playersPoints.get(i)){
+                    winPoints = playersPoints.get(i);
+                    indexWinner = playersNames.get(i);
+                }
+            }
+            winLayout.setVisibility(View.VISIBLE);
+            winner.setText(indexWinner);
+        }
     }
 
     public void calculate(int index, int pointsSubtractor, int pointsPositives)
